@@ -28,3 +28,9 @@ use the editor.
   own key and store it in Secrets.
 - **Secrets.** Lovable manages them. Do not put secret values in the repo.
 <!-- LOVABLE:END -->
+
+## Project rules
+- All app data (accounts, reports, points, redemptions) lives in localStorage via `src/lib/mobility/store.ts` (useSyncExternalStore); no backend, so the app works on static hosting.
+- Pure business rules (points per category, reward costs, upload limits) live in `src/lib/mobility/rules.ts` and are covered by `src/test/rules.test.ts`.
+- Leaflet is browser-only: `MobilityMap` is loaded with React.lazy behind `<ClientOnly>`; never import it statically from a route.
+- Base map uses Esri Light Gray tiles (CARTO now requires an API key); street routing uses the public OSRM servers at routing.openstreetmap.de with an offline estimate fallback.
