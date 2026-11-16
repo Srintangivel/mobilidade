@@ -42,3 +42,29 @@ describe("upload de imagens", () => {
     expect(validateImageFile({ type: "image/png", size: 5 * 1024 * 1024 }).ok).toBe(true);
   });
 });
+
+import { choosePlan } from "@/lib/mobility/routing";
+import type { Report } from "@/lib/mobility/store";
+
+describe("rota mais segura", () => {
+  const hazard = (lat: number, lng: number): Report => ({
+    id: `h${lat}`,
+    userId: "x",
+    userName: "x",
+    category: "pothole",
+    description: "",
+    lat,
+    lng,
+    createdAt: 0,
+    confirmations: 0,
+  });
+  it("escolhe a alternativa que evita ocorrências", () => {
+    const direct = { coords: [[-23.55, -46.63], [-23.56, -46.63]] as [number, number][], distanceKm: 1.1, durationMin: 10 };
+    const detour = { coords: [[-23.55, -46.63], [-23.555, -46.64], [-23.56, -46.63]] as [number, number][], distanceKm: 1.6, durationMin: 14 };
+    const plan = choosePlan([direct, detour], [hazard(-23.555, -46.63)], "osm");
+    expect(plan.fast.durationMin).toBe(10);
+    expect(plan.fast.hazards).toHaveLength(1);
+    expect(plan.safe.durationMin).toBe(14);
+    expect(plan.safe.hazards).toHaveLength(0);
+  });
+});

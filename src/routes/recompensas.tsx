@@ -163,7 +163,7 @@ function RewardsPage() {
   );
 }
 
-export function RedeemedDialog({ redemption, onClose }: { redemption: Redemption | null; onClose: () => void }) {
+function RedeemedDialog({ redemption, onClose }: { redemption: Redemption | null; onClose: () => void }) {
   const [copied, setCopied] = useState(false);
   const reward = REWARDS.find((r) => r.id === redemption?.rewardId);
   return (
