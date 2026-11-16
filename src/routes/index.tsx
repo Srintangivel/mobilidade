@@ -78,7 +78,7 @@ function MapPage() {
   const { reports } = useMobilityState();
   const { user, profile } = useSession();
 
-  const [origin, setOrigin] = useState<Place | null>(PLACES[0]);
+  const [origin, setOrigin] = useState<Place | null>(PLACES[0] ?? null);
   const [dest, setDest] = useState<Place | null>(null);
   const [mode, setMode] = useState<TravelMode>("foot");
   const [plan, setPlan] = useState<RoutePlan | null>(null);

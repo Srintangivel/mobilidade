@@ -55,8 +55,8 @@ export function haversineKm(a: LatLng, b: LatLng) {
 function distanceToPolylineM(point: LatLng, line: LatLng[]) {
   let best = Infinity;
   for (let i = 0; i < line.length - 1; i++) {
-    const [ax, ay] = toMeters(point, line[i]);
-    const [bx, by] = toMeters(point, line[i + 1]);
+    const [ax, ay] = toMeters(point, line[i]!);
+    const [bx, by] = toMeters(point, line[i + 1]!);
     const dx = bx - ax;
     const dy = by - ay;
     const len = dx * dx + dy * dy;
@@ -75,7 +75,7 @@ export function hazardsNear(line: LatLng[], reports: Report[]) {
 async function osrm(points: LatLng[], mode: TravelMode, alternatives: boolean, signal?: AbortSignal) {
   const coords = points.map((p) => `${p[1]},${p[0]}`).join(";");
   const url = `https://routing.openstreetmap.de/${PROFILE[mode]}/route/v1/driving/${coords}?overview=full&geometries=geojson${alternatives ? "&alternatives=3" : ""}`;
-  const res = await fetch(url, { signal });
+  const res = await fetch(url, { signal: signal ?? null });
   if (!res.ok) throw new Error(`Routing ${res.status}`);
   const json = (await res.json()) as {
     code: string;
@@ -132,7 +132,7 @@ export function choosePlan(candidates: Candidate[], reports: Report[], source: R
     hazards: hazardsNear(c.coords, reports),
     source,
   }));
-  const fast = [...options].sort((x, y) => x.durationMin - y.durationMin)[0];
+  const fast = [...options].sort((x, y) => x.durationMin - y.durationMin)[0]!;
   const safer = options
     .filter((o) => o !== fast && o.hazards.length <= fast.hazards.length)
     .filter((o) => o.durationMin <= fast.durationMin * 1.8)

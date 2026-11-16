@@ -65,7 +65,7 @@ export interface Report {
   description: string;
   lat: number;
   lng: number;
-  image?: string;
+  image?: string | undefined;
   createdAt: number;
   confirmations: number;
 }
@@ -256,7 +256,7 @@ export function addReport(input: {
   description: string;
   lat: number;
   lng: number;
-  image?: string;
+  image?: string | undefined;
 }) {
   const user = requireUser();
   const points = pointsForReport(input.category);

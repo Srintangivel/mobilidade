@@ -17,7 +17,7 @@ export interface MobilityMapProps {
   reports: Report[];
   origin: LatLng | null;
   dest: LatLng | null;
-  routes: { active: RouteOption; inactive?: RouteOption } | null;
+  routes: { active: RouteOption; inactive?: RouteOption | undefined } | null;
   activeKind: "fast" | "safe";
   picking: boolean;
   draft: LatLng | null;
