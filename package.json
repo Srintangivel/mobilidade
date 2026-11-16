@@ -11,7 +11,9 @@
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "build:gh-pages": "vite build --config vite.gh-pages.config.ts && touch dist-gh-pages/.nojekyll",
+    "preview:gh-pages": "vite preview --config vite.gh-pages.config.ts"
   },
   "overrides": {
     "rolldown": "1.2.1"
