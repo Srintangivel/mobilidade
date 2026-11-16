@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as EntrarRouteImport } from './routes/entrar'
+import { Route as PerfilRouteImport } from './routes/perfil'
 import { Route as RecompensasRouteImport } from './routes/recompensas'
 
 const IndexRoute = IndexRouteImport.update({
@@ -23,6 +24,11 @@ const EntrarRoute = EntrarRouteImport.update({
   path: '/entrar',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const RecompensasRoute = RecompensasRouteImport.update({
   id: '/recompensas',
   path: '/recompensas',
@@ -32,30 +38,34 @@ const RecompensasRoute = RecompensasRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/entrar': typeof EntrarRoute
+  '/perfil': typeof PerfilRoute
   '/recompensas': typeof RecompensasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/entrar': typeof EntrarRoute
+  '/perfil': typeof PerfilRoute
   '/recompensas': typeof RecompensasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/entrar': typeof EntrarRoute
+  '/perfil': typeof PerfilRoute
   '/recompensas': typeof RecompensasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/entrar' | '/recompensas'
+  fullPaths: '/' | '/entrar' | '/perfil' | '/recompensas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/entrar' | '/recompensas'
-  id: '__root__' | '/' | '/entrar' | '/recompensas'
+  to: '/' | '/entrar' | '/perfil' | '/recompensas'
+  id: '__root__' | '/' | '/entrar' | '/perfil' | '/recompensas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   EntrarRoute: typeof EntrarRoute
+  PerfilRoute: typeof PerfilRoute
   RecompensasRoute: typeof RecompensasRoute
 }
 
@@ -75,6 +85,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EntrarRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/recompensas': {
       id: '/recompensas'
       path: '/recompensas'
@@ -88,6 +105,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   EntrarRoute: EntrarRoute,
+  PerfilRoute: PerfilRoute,
   RecompensasRoute: RecompensasRoute,
 }
 export const routeTree = rootRouteImport
